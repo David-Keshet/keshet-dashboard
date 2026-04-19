@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "פתח HTML ב-Edge",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "start", "msedge", "${file}"],
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}

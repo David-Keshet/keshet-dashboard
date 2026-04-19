@@ -1,0 +1,30 @@
+{
+  "name": "keshet-dashboard-system",
+  "version": "1.0.0",
+  "description": "Multi-business print shop dashboard with N8N integration",
+  "main": "dashboard-server.js",
+  "scripts": {
+    "start": "node dashboard-server.js",
+    "tunnel": "node ngrok-tunnel.js",
+    "bot": "node n8n-scripts/telegram-bot.js",
+    "dev": "concurrently \"npm run tunnel\" \"npm run bot\"",
+    "sync": "node n8n-scripts/sync-to-n8n.js"
+  },
+  "keywords": ["n8n", "automation", "print-shop"],
+  "author": "Keshet Print Shop",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "@ngrok/ngrok": "^0.4.0",
+    "child_process": "^1.0.2",
+    "https": "^1.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

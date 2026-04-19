@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "פתח ב-Edge",
+      "type": "shell",
+      "command": "start msedge \"${file}\"",
+      "problemMatcher": []
+    }
+  ]
+}

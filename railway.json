@@ -1,0 +1,19 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "nixpacks"
+  },
+  "deploy": {
+    "startCommand": "npm start"
+  },
+  "environment": {
+    "N8N_API_KEY": {
+      "description": "Your N8N API Key from localhost",
+      "required": false
+    },
+    "N8N_PUBLIC_URL": {
+      "description": "Your Ngrok public URL (will be set in environment variables)",
+      "required": false
+    }
+  }
+}

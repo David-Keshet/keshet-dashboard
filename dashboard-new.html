@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דשבורד - דפוס קשת</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', 'Assistant', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-right: 1px solid #334155;
+            padding: 24px 0;
+            position: fixed;
+            width: 250px;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding-left: 24px;
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-right: 3px solid #60a5fa;
+        }
+
+        /* Main Content */
+        .main-content {
+            grid-column: 2;
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #475569;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        /* Conversations */
+        .conversation-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .conversation-card:hover {
+            border-color: #475569;
+        }
+
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .customer-info h3 {
+            font-size: 16px;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+        }
+
+        .customer-email {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .quote-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .info-section {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .info-section-label {
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .info-section-content {
+            color: #e2e8f0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid;
+            margin-top: 12px;
+            margin-right: 8px;
+        }
+
+        .status-quote {
+            background: rgba(251, 146, 60, 0.15);
+            color: #fb923c;
+            border-color: rgba(251, 146, 60, 0.3);
+        }
+
+        .status-confirmed {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        /* Orders */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .orders-table th {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #334155;
+            font-weight: 600;
+            font-size: 13px;
+            color: #60a5fa;
+        }
+
+        .orders-table td {
+            padding: 12px;
+            border-bottom: 1px solid #334155;
+            font-size: 13px;
+        }
+
+        .orders-table tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Analytics */
+        .chart-placeholder {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid #334155;
+            }
+
+            .main-content {
+                grid-column: 1;
+                padding: 16px;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                gap: 0;
+            }
+
+            .sidebar-menu li {
+                flex: 1;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h1>🖨️ דפוס קשת</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" data-page="dashboard" class="nav-link active">📊 דשבורד</a></li>
+                <li><a href="#" data-page="conversations" class="nav-link">💬 שיחות</a></li>
+                <li><a href="#" data-page="orders" class="nav-link">📦 הזמנות</a></li>
+                <li><a href="#" data-page="analytics" class="nav-link">📈 דוחות</a></li>
+                <li><a href="#" data-page="settings" class="nav-link">⚙️ הגדרות</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page active">
+                <div class="page-header">
+                    <h1>ברוכים הבאים! 👋</h1>
+                    <p>סקירה כללית של מערכת ההזמנות</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">פנייות כולל</div>
+                        <div class="stat-value">3</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">הצעות בהמתנה</div>
+                        <div class="stat-value">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">הזמנות מאושרות</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">בביצוע</div>
+                        <div class="stat-value">1</div>
+                    </div>
+                </div>
+
+                <div class="page-header" style="margin-top: 40px;">
+                    <h1 style="font-size: 24px;">שיחות אחרונות</h1>
+                </div>
+
+                <div class="conversation-card">
+                    <div class="conversation-header">
+                        <div class="customer-info">
+                            <h3>דוד כהן</h3>
+                            <div class="customer-email">david@example.com</div>
+                        </div>
+                        <span class="quote-badge">#QT-2026-7731</span>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">📨 הודעה</div>
+                        <div class="info-section-content">שלום, אני צריך הצעת מחיר על 100 כרטיסי ביקור צד אחד</div>
+                    </div>
+                    <span class="status-badge status-quote">הצעה נשלחה</span>
+                </div>
+
+                <div class="conversation-card">
+                    <div class="conversation-header">
+                        <div class="customer-info">
+                            <h3>עמית לוי</h3>
+                            <div class="customer-email">amit@company.com</div>
+                        </div>
+                        <span class="quote-badge">#QT-2026-7732</span>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">📨 הודעה</div>
+                        <div class="info-section-content">אני רוצה להדפיס פליירים 200 יח', A4 דו-צדדי</div>
+                    </div>
+                    <span class="status-badge status-confirmed">הזמנה מאושרת</span>
+                </div>
+            </div>
+
+            <!-- Conversations Page -->
+            <div id="conversations" class="page">
+                <div class="page-header">
+                    <h1>שיחות עם לקוחות</h1>
+                    <p>כל ההודעות וההצעות</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">כל השיחות</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">הנוכחיות</div>
+                        <div class="stat-value">3</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">הסתיימו</div>
+                        <div class="stat-value">9</div>
+                    </div>
+                </div>
+
+                <div class="conversation-card">
+                    <div class="conversation-header">
+                        <div class="customer-info">
+                            <h3>דוד כהן</h3>
+                            <div class="customer-email">david@example.com</div>
+                        </div>
+                        <span class="quote-badge">#QT-2026-7731</span>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">📨 הודעה</div>
+                        <div class="info-section-content">שלום, אני צריך הצעת מחיר על 100 כרטיסי ביקור צד אחד, כרומו 350</div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">✅ תשובה</div>
+                        <div class="info-section-content"><strong>כרטיסי ביקור:</strong> 100 יח' = <strong>100 ₪</strong> (לפני מע"מ)<br><strong>כולל מע"מ: 118 ₪</strong></div>
+                    </div>
+                    <span class="status-badge status-quote">הצעה נשלחה</span>
+                </div>
+
+                <div class="conversation-card">
+                    <div class="conversation-header">
+                        <div class="customer-info">
+                            <h3>עמית לוי</h3>
+                            <div class="customer-email">amit@company.com</div>
+                        </div>
+                        <span class="quote-badge">#QT-2026-7732</span>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">📨 הודעה</div>
+                        <div class="info-section-content">אני רוצה להדפיס פליירים 200 יח', A4 דו-צדדי</div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-section-label">✅ תשובה</div>
+                        <div class="info-section-content"><strong>פליירים A4 דו-צדדי:</strong> 200 יח' = <strong>357 ₪</strong> (לפני מע"מ)<br><strong>כולל מע"מ: 421 ₪</strong></div>
+                    </div>
+                    <span class="status-badge status-confirmed">הזמנה מאושרת</span>
+                </div>
+            </div>
+
+            <!-- Orders Page -->
+            <div id="orders" class="page">
+                <div class="page-header">
+                    <h1>כל ההזמנות</h1>
+                    <p>ניהול וסטטוס הזמנות</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">סה"כ הזמנות</div>
+                        <div class="stat-value">15</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">בעבודה</div>
+                        <div class="stat-value">4</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">מוכנות</div>
+                        <div class="stat-value">8</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">הנושמות</div>
+                        <div class="stat-value">3</div>
+                    </div>
+                </div>
+
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>לקוח</th>
+                            <th>מוצר</th>
+                            <th>כמות</th>
+                            <th>מחיר</th>
+                            <th>סטטוס</th>
+                            <th>תאריך</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>דוד כהן</td>
+                            <td>כרטיסי ביקור</td>
+                            <td>100</td>
+                            <td>118 ₪</td>
+                            <td><span class="status-badge status-quote">הצעה</span></td>
+                            <td>17/04/2026</td>
+                        </tr>
+                        <tr>
+                            <td>עמית לוי</td>
+                            <td>פליירים A4</td>
+                            <td>200</td>
+                            <td>421 ₪</td>
+                            <td><span class="status-badge status-confirmed">מאושרה</span></td>
+                            <td>16/04/2026</td>
+                        </tr>
+                        <tr>
+                            <td>יוסי כהן</td>
+                            <td>שמשונית PVC</td>
+                            <td>4</td>
+                            <td>978 ₪</td>
+                            <td><span class="status-badge status-confirmed">בביצוע</span></td>
+                            <td>15/04/2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Analytics Page -->
+            <div id="analytics" class="page">
+                <div class="page-header">
+                    <h1>דוחות ואנליטיקה</h1>
+                    <p>ניתוח נתוני המערכת</p>
+                </div>
+
+                <div class="chart-placeholder">
+                    📊 טבלת הכנסות שבועית<br><br>
+                    (יחובר לנתונים בחיים בקרוב)
+                </div>
+
+                <div class="chart-placeholder">
+                    📈 טבלת מוצרים פופולריים<br><br>
+                    (יחובר לנתונים בחיים בקרוב)
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">סה"כ הכנסות</div>
+                        <div class="stat-value">₪1,517</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">ממוצע הזמנה</div>
+                        <div class="stat-value">₪505</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">שיעור המרה</div>
+                        <div class="stat-value">67%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings" class="page">
+                <div class="page-header">
+                    <h1>הגדרות</h1>
+                    <p>ניהול הפרמטרים של המערכת</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; padding: 24px; border-radius: 12px;">
+                    <h2 style="color: #f1f5f9; margin-bottom: 16px;">חיבורים</h2>
+                    <div style="padding: 12px; background: rgba(59, 130, 246, 0.1); border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2); margin-bottom: 12px;">
+                        <div style="color: #60a5fa; font-weight: 600;">✅ N8N</div>
+                        <div style="color: #94a3b8; font-size: 13px;">חיבור פעיל ל-localhost:5678</div>
+                    </div>
+                    <div style="padding: 12px; background: rgba(34, 197, 94, 0.1); border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.2); margin-bottom: 12px;">
+                        <div style="color: #22c55e; font-weight: 600;">✅ Telegram Bot</div>
+                        <div style="color: #94a3b8; font-size: 13px;">בוט פעיל ומאזין להודעות</div>
+                    </div>
+                    <div style="padding: 12px; background: rgba(251, 146, 60, 0.1); border-radius: 8px; border: 1px solid rgba(251, 146, 60, 0.2);">
+                        <div style="color: #fb923c; font-weight: 600;">⏳ Trello</div>
+                        <div style="color: #94a3b8; font-size: 13px;">בהכנה לחיבור</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Remove active from all links and pages
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+                // Add active to clicked link
+                link.classList.add('active');
+
+                // Show corresponding page
+                const pageId = link.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

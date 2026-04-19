@@ -384,6 +384,18 @@ app.get('/api/live-data', async (req, res) => {
   res.json(await getLiveData());
 });
 
+// API: Webhook from N8N - GET for testing
+app.get('/api/webhook/n8n', (req, res) => {
+  res.json({
+    status: 'connected',
+    message: 'N8N Webhook endpoint is ready',
+    method: 'POST',
+    url: `http://localhost:${process.env.PORT || 3000}/api/webhook/n8n`,
+    data_file: DATA_FILE,
+    conversations_count: loadLiveData().conversations.length
+  });
+});
+
 // API: Webhook from N8N - receive processed email data
 app.post('/api/webhook/n8n', (req, res) => {
   const payload = req.body;

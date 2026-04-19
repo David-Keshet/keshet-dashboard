@@ -14,6 +14,22 @@
     "N8N_PUBLIC_URL": {
       "description": "Your Ngrok public URL (will be set in environment variables)",
       "required": false
+    },
+    "N8N_WEBHOOK_URL": {
+      "description": "The permanent public webhook URL for your N8N workflow",
+      "required": false
+    },
+    "TRELLO_KEY": {
+      "description": "Your Trello API key for live board access",
+      "required": false
+    },
+    "TRELLO_TOKEN": {
+      "description": "Your Trello API token for live board access",
+      "required": false
+    },
+    "TRELLO_BOARD_ID": {
+      "description": "The Trello board ID used for live dashboard data",
+      "required": false
     }
   }
 }

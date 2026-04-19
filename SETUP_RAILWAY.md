@@ -67,13 +67,54 @@ git commit -m "Initial setup"
 ```
 N8N_API_KEY = [Your N8N API Key from localhost]
 N8N_PUBLIC_URL = https://XXXX-XXXX.ngrok.io
+N8N_WEBHOOK_URL = https://XXXX-XXXX.ngrok.io/webhook/your-permanent-hook
+TRELLO_KEY = [Your Trello API key]
+TRELLO_TOKEN = [Your Trello API token]
+TRELLO_BOARD_ID = [Your Trello board ID]
 ```
+
+> חשוב: כדי שהדשבורד יהיה באמת ב״לייב״, `N8N_WEBHOOK_URL` צריך להיות URL קבוע שמוביל ל־Webhook פעיל ב־N8N.
+>
+> דוגמה לתשובה תקינה מה־Webhook של N8N:
+> ```json
+> [
+>   {
+>     "summary": {
+>       "total_conversations": 10,
+>       "pending_quotes": 4,
+>       "approved_orders": 5,
+>       "in_progress": 1,
+>       "total_orders": 10,
+>       "total_revenue": 2500,
+>       "average_order": 250,
+>       "conversion_rate": 50
+>     },
+>     "conversations": [],
+>     "orders": []
+>   }
+> ]
+> ```
+>
+> הקוד תומך גם במבנה ישיר ללא עטיפה נוספת של `data` או `body`.
 
 **איפה למצוא N8N API Key?**
 1. פתח http://localhost:5678
 2. Settings → API
 3. Generate new key
 4. Copy וpaste לRailway
+
+**איך למקם את ה-N8N webhook קבוע?**
+- בחר ב-N8N workflow שלך
+- ודא שה-Webhook node מוגדר ל-`Respond to Webhook` ושה-Response Body מחזיר JSON תקין
+- השתמש ב-URL הציבורי של Ngrok או בכתובת ישירה ל-N8N מהסביבה שלך
+- הדבק את הכתובת ב-`N8N_WEBHOOK_URL`
+
+**איפה למצוא Trello variables?**
+1. היכנס ל-Trello.com
+2. פתח את המפתח שלך ב-https://trello.com/app-key
+3. לחץ על הקישור ליצירת token (או השתמש ב-https://trello.com/1/authorize?...) כדי לאשר גישה
+4. את ה-board ID אפשר למצוא ב-URL של הלוח או על ידי ביצוע קריאה ל-API של Trello
+5. אם לא מוגדרים משתני Trello ב-Railway, ה-dashboard עדיין ירוץ עם קובץ `live-data.json` מקומי
 
 ### 2.4 Deploy
 Railway יפעיל אוטומטי. תראה:

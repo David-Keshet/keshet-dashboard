@@ -4,9 +4,17 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 // ===== CONFIG =====
-const BOT_TOKEN = '8743149734:AAFHHhfvBR9jlUL-8YlOLgYTqNaHxq86gNc';
-const ANTHROPIC_KEY = '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';
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
 const POLL_INTERVAL = 5000;
+
+if (!BOT_TOKEN || !ANTHROPIC_KEY) {
+  console.error('❌ שגיאה: צריך להגדיר environment variables:');
+  console.error('   TELEGRAM_BOT_TOKEN');
+  console.error('   ANTHROPIC_API_KEY');
+  console.error('\nדוגמה: set TELEGRAM_BOT_TOKEN=your_token && node telegram-bot.js');
+  process.exit(1);
+}
 
 const BASE_DIR = path.join(__dirname);
 const PROMPTS_DIR = path.join(BASE_DIR, 'prompts');

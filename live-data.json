@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "total_conversations": 12,
+    "pending_quotes": 4,
+    "approved_orders": 5,
+    "in_progress": 3,
+    "total_orders": 18,
+    "total_revenue": 2250,
+    "average_order": 375,
+    "conversion_rate": 72
+  },
+  "conversations": [
+    {
+      "id": 1,
+      "customer_name": "דוד כהן",
+      "customer_email": "david@example.com",
+      "quote_number": "#QT-2026-7731",
+      "message": "שלום, אני צריך הצעת מחיר על 100 כרטיסי ביקור צד אחד",
+      "response": "כרטיסי ביקור 100 יח׳ = 100 ₪ | כולל מע״מ: 118 ₪",
+      "status": "quote_sent",
+      "status_label": "הצעה נשלחה",
+      "timestamp": "2026-04-19T12:20:00.000Z",
+      "handled": true
+    },
+    {
+      "id": 2,
+      "customer_name": "עמית לוי",
+      "customer_email": "amit@company.com",
+      "quote_number": "#QT-2026-7732",
+      "message": "אני רוצה להדפיס פליירים 200 יח׳, A4 דו-צדדי",
+      "response": "פליירים 200 יח׳ A4 דו-צדדי = 357 ₪ | כולל מע״מ: 421 ₪",
+      "status": "confirmed",
+      "status_label": "הזמנה מאושרת",
+      "timestamp": "2026-04-19T11:40:00.000Z",
+      "handled": true
+    }
+  ],
+  "orders": [
+    {
+      "order_id": "ORD-2026-001",
+      "customer": "דוד כהן",
+      "product": "כרטיסי ביקור",
+      "quantity": 100,
+      "amount": 118,
+      "status": "quote",
+      "status_label": "הצעה",
+      "date": "17/04/2026"
+    },
+    {
+      "order_id": "ORD-2026-002",
+      "customer": "עמית לוי",
+      "product": "פליירים A4",
+      "quantity": 200,
+      "amount": 421,
+      "status": "confirmed",
+      "status_label": "מאושרת",
+      "date": "16/04/2026"
+    },
+    {
+      "order_id": "ORD-2026-003",
+      "customer": "יוסי כהן",
+      "product": "שמשונית PVC",
+      "quantity": 4,
+      "amount": 978,
+      "status": "in_progress",
+      "status_label": "בביצוע",
+      "date": "15/04/2026"
+    }
+  ]
+}
